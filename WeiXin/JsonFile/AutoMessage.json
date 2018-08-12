@@ -1,0 +1,25 @@
+﻿{
+  "AutoReply": [
+    {
+      "Key": "七夕活动",
+      "ImgUrl": "https://mmbiz.qpic.cn/mmbiz_jpg/LSXbsehoBuBFd0ODrl1bm3bogicH7IQ52FIOibgC8Hnh6VggicLN9s4Q3sicBqZjMHJAYosx0DASPP1sSGPItiaicibIQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1",
+      "Link": "http://cn.mikecrm.com/pDsm8Qz",
+      "Title":"相约西大-七夕活动",
+      "Content": "点击图片，进入活动报名页面",
+      "Type": 6
+    },
+    {
+      "Key": "匹配结果",
+      "Content": "小编正在努力帮您寻找心仪的对象，请稍后再来查询哦\n正确格式为：匹配结果#手机号码；如：匹配结果#10086",
+      "Type": 1
+    },
+    {
+      "Key": "匹配结果#",
+      "Title": "点击图片，加入CP群大家庭",
+      "ImgUrl": "https://mmbiz.qpic.cn/mmbiz_jpg/6paknjY1tyGAXG8tGNbXWaFQX2bjv6oXgk42DGSdSpGm6ibHdJbvFc4mibbhY4nDIVoKIMb9UxpGn6uDcOR87syw/0?wx_fmt=jpeg",
+      "Link": "https://mmbiz.qpic.cn/mmbiz_png/6paknjY1tyGAXG8tGNbXWaFQX2bjv6oX8xKl7ZvsqgiaHSnrXn9jbusreMHleP8xs2YPxWcRurgYRh9w7ZRnhJw/0?wx_fmt=png",
+      "Content": "",
+      "Type": 7
+    }
+  ]
+}

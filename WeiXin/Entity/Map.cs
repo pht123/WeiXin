@@ -8,9 +8,8 @@ namespace WeiXin.Entity
 {
     public class Map
     {
-        [Key]
-        public int ManTelphone { get; set; }
-        [Key]
-        public int WomenTelphone{get;set;}
+        public int ID { get; set; }
+        public string ManTelphone { get; set; }
+        public string WomenTelphone{get;set;}
     }
 }

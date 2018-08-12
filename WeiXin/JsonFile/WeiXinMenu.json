@@ -1,0 +1,14 @@
+﻿{
+  "button": [
+    {
+      "type": "view",
+      "name": "七夕活动",
+      "key": "http://cn.mikecrm.com/pDsm8Qz"
+    },
+    {
+      "type": "click",
+      "name": "匹配结果",
+      "key": "QiXi_CP"
+    }
+  ]
+}

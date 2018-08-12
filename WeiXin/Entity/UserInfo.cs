@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,18 +9,21 @@ namespace WeiXin.Entity
 {
     public class UserInfo
     {
-        [Key]
-        public int Telphone { get; set; }
+        public DateTime AddTime { get; set; }
         public string Name { get; set; }
-        public bool Sex { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string Sex { get; set; }
+        [Key]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]//不自增
+        public string Telphone { get; set; }
+
         public string QQ { get; set; }
-        public string WX { get; set; }
-        public string Address { get; set; }
+        public string BirthDay { get; set; }
+        public string Address { get; set; }             
         /// <summary>
         /// 年级
         /// </summary>
         public string Grade { get; set; }
+        public string WX { get; set; }
         /// <summary>
         /// 学院
         /// </summary>
