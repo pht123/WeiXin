@@ -21,12 +21,14 @@ namespace WeiXin.Controllers
         private readonly IConfiguration _configuration;
         private readonly ILoggerRepository _loggerRepository = Startup.loggerRepository;
         private ILog log;
+        private ILog cpLog;
         private DataBase.AccountContext _context;
         private IMemoryCache _cache;
         public ValuesController(IConfiguration configuration, DataBase.AccountContext context, IMemoryCache cache)
         {
             _configuration = configuration;
             log = LogManager.GetLogger(_loggerRepository.Name, typeof(ValuesController));
+            cpLog = LogManager.GetLogger(Startup.cp_loggerRepository.Name, typeof(ValuesController));
             _context = context;
             _cache = cache;
         }
@@ -52,8 +54,13 @@ namespace WeiXin.Controllers
         {
             var reader = new StreamReader(Request.Body);
             string xml = await reader.ReadToEndAsync();
-            log.Error($"用户发送的信息{xml}");
+            log.Error($"用户发送的信息{xml}");           
             Models.xml message = Common.CommonFunction.GetMessage(xml);
+            if (message == null)
+            {
+                log.Error($"不是文本信息，不解析");
+                return "";
+            }
 
             var builder = new ConfigurationBuilder().AddJsonFile("JsonFile/AutoMessage.json", optional: false, reloadOnChange: true);
             var config = builder.Build();
@@ -66,7 +73,8 @@ namespace WeiXin.Controllers
                     {
                         if (message.Content.StartsWith(reply.Key))
                         {
-                            string telphone = message.Content.Substring(reply.Key.Length).Trim();
+                            cpLog.Error($"查询CP信息：{message.Content}");
+                            string telphone = message.Content.Substring(reply.Key.Length).Trim();                            
                             var cp = _context.Map.Where(t => t.ManTelphone == telphone).FirstOrDefault();
                             string cp_telphone = "";
                             if (cp == null)
@@ -74,6 +82,7 @@ namespace WeiXin.Controllers
                                 cp = _context.Map.Where(t => t.WomenTelphone == telphone).FirstOrDefault();
                                 if (cp == null)
                                 {
+                                    cpLog.Error($"查询CP信息，电话：{telphone}；没有配对结果");
                                     message.Content = "找不到您的匹配信息哦，小编正在努力帮您寻找心仪的对象...";
                                     return Common.CommonFunction.GetTextMesage(message);
                                 }
@@ -82,16 +91,17 @@ namespace WeiXin.Controllers
                             else
                             {
                                 cp_telphone = cp.WomenTelphone;
-                            }                            
+                            }
                             var cp_user = _context.UserInfo.Where(t => t.Telphone == cp_telphone).FirstOrDefault();
                             if (cp_user == null)
                             {
                                 message.Content = "CP丢失了，小编正在努力匹配中...";
-                                log.Error($"CP信息丢失；电话号码：{telphone}");
+                                cpLog.Error($"CP信息丢失；CP1电话：{telphone}；匹配的结果：{cp_telphone}");
                                 return Common.CommonFunction.GetTextMesage(message);                               
                             }
                             else
                             {
+                                cpLog.Error($"CP匹配成功；CP1电话：{telphone}；匹配的结果：{cp_telphone}");
                                 reply.Content = Common.CommonFunction.GetCp(cp_user, cp.ID);
                                 return Common.CommonFunction.GetNewsMesage(message, reply);
                             }

@@ -21,10 +21,14 @@ namespace WeiXin
             Configuration = configuration;
             loggerRepository = log4net.LogManager.CreateRepository("NETCoreRepository");
             log4net.Config.XmlConfigurator.Configure(loggerRepository, new System.IO.FileInfo("log4net.config"));
+
+            cp_loggerRepository = log4net.LogManager.CreateRepository("CPRepository");
+            log4net.Config.XmlConfigurator.Configure(cp_loggerRepository, new System.IO.FileInfo("CP_log4net.config"));
         }
 
         public IConfiguration Configuration { get; }
         public static ILoggerRepository loggerRepository { get; set; }
+        public static ILoggerRepository cp_loggerRepository { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

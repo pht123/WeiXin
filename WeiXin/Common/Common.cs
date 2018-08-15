@@ -47,13 +47,21 @@ namespace WeiXin.Common
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
+            XmlNode xnMsgType = doc.SelectSingleNode($"/xml/MsgType");
+            if(xnMsgType.InnerText != "text")
+            {
+                return null;
+            }
 
             Type type = typeof(Models.xml);
             var propertries = type.GetProperties();
             foreach (var pi in propertries)//遍历当前类的所有公共属性
             {
                 XmlNode xnChiefComplaint = doc.SelectSingleNode($"/xml/{pi.Name}");
-                pi.SetValue(message, xnChiefComplaint.InnerText);
+                if(xnChiefComplaint != null)
+                {
+                    pi.SetValue(message, xnChiefComplaint.InnerText);
+                }                
             }
             return message;
         }
